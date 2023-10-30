@@ -1,5 +1,5 @@
 //	Библиотека для работы с GPS модулем ATGM336: https://iarduino.ru/shop/Expansion-payments/gps-glonass-modul-trema-modul.html
-//  Версия: 1.0.1
+//  Версия: 1.1.0
 //  Последнюю версию библиотеки Вы можете скачать по ссылке: https://iarduino.ru/file/539.html
 //  Подробное описание функций бибилиотеки доступно по ссылке: https://wiki.iarduino.ru/page/GPS-module/
 //  Библиотека является собственностью интернет магазина iarduino.ru и может свободно использоваться и распространяться!
@@ -11,7 +11,9 @@
 #ifndef iarduino_GPS_ATGM336_h																										//
 #define iarduino_GPS_ATGM336_h																										//
 																																	//
-#include "SoftwareSerial.h"																											//
+#ifdef    SoftwareSerial_h																											//	Если в скетче подключена библиотека  SoftwareSerial,
+#include "SoftwareSerial.h"																											//	то разрешаем работать  с библиотекой SoftwareSerial.
+#endif																																//
 																																	//
 #if defined(ARDUINO) && (ARDUINO >= 100)																							//
 #include		<Arduino.h>																											//
@@ -50,7 +52,9 @@ class iarduino_GPS_ATGM336{																											//
 	public:																															//
 	/**	Пользовательские функции **/																								//
 		bool		begin			(HardwareSerial &i				){ _flgTypeSerial=1; _objSerial=&i; return _begin(); }			//	Определяем функцию инициализации работы с модулем		(Параметр:  объект для работы с аппаратным  UART).
+		#ifdef SoftwareSerial_h																										//
 		bool		begin			(SoftwareSerial &i				){ _flgTypeSerial=2; _objSerial=&i; return _begin(); }			//	Определяем функцию инициализации работы с модулем		(Параметр:  объект для работы с программным UART).
+		#endif																														//
 		void		save			(void							);																//	Объявляем  функцию сохранения настроек в Flash модуля	(Параметр:  отсутствует).
 		uint32_t	baudrate		(uint32_t=0						);																//	Объявляем  функцию установки скорости					(Параметр:  скорость 4800/9600/19200/38400/57600/115200, если параметр отсутствует то будет установлена скорость на которую настроен модуль).
 		void		updaterate		(uint8_t						);																//	Объявляем  функцию установки частоты обновления данных	(Параметр:  частота обновления данных от 1 до 10 раз в секунду).

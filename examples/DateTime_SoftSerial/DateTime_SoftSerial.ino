@@ -3,13 +3,13 @@
 const uint8_t pinRX = 5;                           //  Определяем вывод RX (программного UART) на плате Arduino к которому подключён вывод TX модуля. Номер вывода можно изменить.
 const uint8_t pinTX = 6;                           //  Определяем вывод TX (программного UART) на плате Arduino к которому подключён вывод RX модуля. Номер вывода можно изменить.
                                                    //
+#include <SoftwareSerial.h>                        //  Подключаем библиотеку для работы с программным UART, до подключения библиотек iarduino_GPS_NMEA и iarduino_GPS_ATGM336.
 #include <iarduino_GPS_NMEA.h>                     //  Подключаем библиотеку для расшифровки строк протокола NMEA получаемых по UART.
 #include <iarduino_GPS_ATGM336.h>                  //  Подключаем библиотеку для настройки параметров работы GPS модуля ATGM336.
-#include <SoftwareSerial.h>                        //  Подключаем библиотеку для работы с программным UART.
                                                    //
+SoftwareSerial       SerialGPS(pinRX, pinTX);      //  Объявляем объект SerialGPS   для работы с функциями и методами библиотеки SoftwareSerial, указав выводы RX и TX Arduino.
 iarduino_GPS_NMEA    gps;                          //  Объявляем объект gps         для работы с функциями и методами библиотеки iarduino_GPS_NMEA.
 iarduino_GPS_ATGM336 SettingsGPS;                  //  Объявляем объект SettingsGPS для работы с функциями и методами библиотеки iarduino_GPS_ATGM336.
-SoftwareSerial       SerialGPS(pinRX, pinTX);      //  Объявляем объект SerialGPS   для работы с функциями и методами библиотеки SoftwareSerial, указав выводы RX и TX Arduino.
                                                    //
 char* wd[]={"Вс","Пн","Вт","Ср","Чт","Пт","Сб"};   //  Определяем массив строк содержащих по две первых буквы из названий дня недели.
                                                    //

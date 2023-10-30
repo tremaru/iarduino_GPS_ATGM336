@@ -1,5 +1,4 @@
 #include "iarduino_GPS_ATGM336.h"																									//
-#include "SoftwareSerial.h"																											//
 																																	//
 //		ИНИЦИАЛИЗАЦИЯ РАБОТЫ С МОДУЛЕМ:																								//	Возвращаемое значение:	флаг результата инициализации (true/false).
 bool	iarduino_GPS_ATGM336::_begin(void){																							//	Параметры:				отсутствуют.
@@ -166,9 +165,39 @@ void	iarduino_GPS_ATGM336::_printCommand(const char* str){																		//	�
 }																																	//
 																																	//
 //		ФУНКЦИИ РАБОТЫ С UART:																										//
-void	iarduino_GPS_ATGM336::_SerialFlush    (void         ){ while(_SerialAvailable()){_SerialRead();}}							//	Очистка буфера UART.
-bool	iarduino_GPS_ATGM336::_SerialReady    (void         ){ if(_flgTypeSerial==1){return (bool   )(*(HardwareSerial*)_objSerial);            }else if(_flgTypeSerial==2){return (bool   )(*(SoftwareSerial*)_objSerial);            }else{return 0;} }	//	Проверка готовности UART.
-uint8_t	iarduino_GPS_ATGM336::_SerialRead     (void         ){ if(_flgTypeSerial==1){return (uint8_t)(*(HardwareSerial*)_objSerial).read();     }else if(_flgTypeSerial==2){return (uint8_t)(*(SoftwareSerial*)_objSerial).read();     }else{return 0;} }	//	Чтение байта из буфера UART.
-uint8_t	iarduino_GPS_ATGM336::_SerialAvailable(void         ){ if(_flgTypeSerial==1){return (uint8_t)(*(HardwareSerial*)_objSerial).available();}else if(_flgTypeSerial==2){return (uint8_t)(*(SoftwareSerial*)_objSerial).available();}else{return 0;} }	//	Чтение заполненности буфера UART.
-void	iarduino_GPS_ATGM336::_SerialPrint    (const char* i){ if(_flgTypeSerial==1){                (*(HardwareSerial*)_objSerial).print(i);   }else if(_flgTypeSerial==2){                (*(SoftwareSerial*)_objSerial).print(i);   }                }	//	Отправка строки по шине UART.
-void	iarduino_GPS_ATGM336::_SerialBegin    (uint32_t i   ){ if(_flgTypeSerial==1){                (*(HardwareSerial*)_objSerial).begin(i);   }else if(_flgTypeSerial==2){                (*(SoftwareSerial*)_objSerial).begin(i);   }                }	//	Установка скорости передачи данных по шине UART.
+void	iarduino_GPS_ATGM336::_SerialFlush(void){ while(_SerialAvailable()){_SerialRead();} }										//	Очистка буфера UART.
+bool	iarduino_GPS_ATGM336::_SerialReady(void){																					//
+			if(_flgTypeSerial==1){return (bool   )(*(HardwareSerial*)_objSerial);            }else									//	Проверка готовности аппаратного UART.
+			#ifdef SoftwareSerial_h																									//
+			if(_flgTypeSerial==2){return (bool   )(*(SoftwareSerial*)_objSerial);            }else									//	Проверка готовности программного UART.
+			#endif																													//
+			                     {return 0;}																						//
+}																																	//
+uint8_t	iarduino_GPS_ATGM336::_SerialRead(void){																					//
+			if(_flgTypeSerial==1){return (uint8_t)(*(HardwareSerial*)_objSerial).read();     }else									//	Чтение байта из буфера аппаратного UART.
+			#ifdef SoftwareSerial_h																									//
+			if(_flgTypeSerial==2){return (uint8_t)(*(SoftwareSerial*)_objSerial).read();     }else									//	Чтение байта из буфера программного UART.
+			#endif																													//
+			                     {return 0;}																						//
+}																																	//
+uint8_t	iarduino_GPS_ATGM336::_SerialAvailable(void){																				//
+			if(_flgTypeSerial==1){return (uint8_t)(*(HardwareSerial*)_objSerial).available();}else									//	Чтение заполненности буфера аппаратного UART.
+			#ifdef SoftwareSerial_h																									//
+			if(_flgTypeSerial==2){return (uint8_t)(*(SoftwareSerial*)_objSerial).available();}else									//	Чтение заполненности буфера программного UART.
+			#endif																													//
+			                     {return 0;}																						//
+}																																	//
+void	iarduino_GPS_ATGM336::_SerialPrint(const char* i){																			//
+			if(_flgTypeSerial==1){                (*(HardwareSerial*)_objSerial).print(i);   }else									//	Отправка строки по шине аппаратного UART.
+			#ifdef SoftwareSerial_h																									//
+			if(_flgTypeSerial==2){                (*(SoftwareSerial*)_objSerial).print(i);   }else									//	Отправка строки по шине программного UART.
+			#endif																													//
+			                     {return;}																							//
+}																																	//
+void	iarduino_GPS_ATGM336::_SerialBegin(uint32_t i){																				//
+			if(_flgTypeSerial==1){                (*(HardwareSerial*)_objSerial).begin(i);   }else									//	Установка скорости передачи данных по шине аппаратного UART.
+			#ifdef SoftwareSerial_h																									//
+			if(_flgTypeSerial==2){                (*(SoftwareSerial*)_objSerial).begin(i);   }else									//	Установка скорости передачи данных по шине программного UART.
+			#endif																													//
+			                     {return;}																							//
+}																																	//
