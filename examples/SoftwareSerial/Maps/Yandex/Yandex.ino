@@ -1,7 +1,7 @@
-// ПРИМЕР ВЫВОДИТ ССЫЛКУ GOOGLE 5 РАЗ В СЕКУНДУ:   //
+// ПРИМЕР ВЫВОДИТ ССЫЛКУ YANDEX 5 РАЗ В СЕКУНДУ:   //
                                                    //
-const uint8_t pinRX = 5;                           //  Определяем вывод RX (программного UART) на плате Arduino к которому подключён вывод TX модуля. Номер вывода можно изменить.
-const uint8_t pinTX = 6;                           //  Определяем вывод TX (программного UART) на плате Arduino к которому подключён вывод RX модуля. Номер вывода можно изменить.
+const uint8_t pinRX = 8;                           //  Определяем вывод RX (программного UART) на плате Arduino к которому подключён вывод TX модуля. Номер вывода можно изменить.
+const uint8_t pinTX = 9;                           //  Определяем вывод TX (программного UART) на плате Arduino к которому подключён вывод RX модуля. Номер вывода можно изменить.
                                                    //
 #include <SoftwareSerial.h>                        //  Подключаем библиотеку для работы с программным UART, до подключения библиотек iarduino_GPS_NMEA и iarduino_GPS_ATGM336.
 #include <iarduino_GPS_NMEA.h>                     //  Подключаем библиотеку для расшифровки строк протокола NMEA получаемых по UART.
@@ -26,20 +26,28 @@ void setup(){                                      //
 void loop(){                                       //
      gps.read();                                   //  Читаем данные.
      if(!gps.errPos){                              //
-       Serial.print("https://www.google.ru/maps/");//  Ссылка на google карты:
+         Serial.print("http://maps.yandex.ru/");   //  Ссылка на yandex карты:
                                                    //
-       Serial.print("place/");                     //  Координаты точки:
-       Serial.print(gps.latitude,5);               //  Широта.
-       Serial.print(",");                          //  ,
-       Serial.print(gps.longitude,5);              //  Долгота.
+         Serial.print("?ll=");                     //  Координаты центра экрана:
+         Serial.print(gps.longitude,5);            //  Долгота.
+         Serial.print(",");                        //  ,
+         Serial.print(gps.latitude,5);             //  Широта.
                                                    //
-       Serial.print("?hl=");                       //  Язык:
-       Serial.print("ru");                         //  Русский:
+         Serial.print("&pt=");                     //  Координаты точки на карте:
+         Serial.print(gps.longitude,5);            //  Долгота.
+         Serial.print(",");                        //  ,
+         Serial.print(gps.latitude,5);             //  Широта.
                                                    //
-       Serial.print("\r\n");                       //
+         Serial.print("&l=");                      //  Тип карты:
+         Serial.print("map");                      //  "map"-схема (по умолчанию), "sat"-спутник, "skl"-гибрид.
+                                                   //
+         Serial.print("&z=");                      //  Приближение:
+         Serial.print("18");                       //  от 2-мир, до 19-дом, по умолчанию 10-город.
+                                                   //
+         Serial.print("\r\n");                     //
      }else{                                        //
-       Serial.println("Нет данных.");              //
-       delay(2000);                                //
+         Serial.println("Нет данных.");            //
+         delay(2000);                              //
      }                                             //
 }                                                  //
                                                    //
