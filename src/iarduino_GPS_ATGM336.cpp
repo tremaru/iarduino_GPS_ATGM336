@@ -129,11 +129,13 @@ void	iarduino_GPS_ATGM336::_printCommand(const char* str){																		//	�
 //		ФУНКЦИИ РАБОТЫ С UART:																										//
 void	iarduino_GPS_ATGM336::_SerialFlush(void){ while(_SerialAvailable()){_SerialRead();} }										//	Очистка буфера UART.
 bool	iarduino_GPS_ATGM336::_SerialReady(void){																					//
-			if(_flgTypeSerial==1){return (bool   )(*(HardwareSerial*)_objSerial);            }else									//	Проверка готовности аппаратного UART.
-#ifndef RENESAS_CORTEX_M4																											//	Библиотека SoftwareSerial для плат Arduino UNO R4 не поддерживает operator!(bool). По состоянию на март 2024г.
-			if(_flgTypeSerial==2){return (bool   )(*(SOFTwareSerial*)_objSerial);            }else									//	Проверка готовности программного UART.
-#endif																																//
-			                     {return 1;}																						//
+		#ifndef ARDUINO_ARCH_RP2040																									//	Для плат Paspberry Pi Pico поддерживается (bool)Serial, но не поддерживается (bool)Serial1. Возможно после 2024 года этот баг уберут.
+				if(_flgTypeSerial==1){return (bool   )(*(HardwareSerial*)_objSerial);        }else									//	Проверка готовности аппаратного UART.
+			#ifndef RENESAS_CORTEX_M4																								//	Библиотека SoftwareSerial для плат Arduino UNO R4 не поддерживает operator!(bool). По состоянию на март 2024г.
+				if(_flgTypeSerial==2){return (bool   )(*(SOFTwareSerial*)_objSerial);        }else									//	Проверка готовности программного UART.
+			#endif																													//
+		#endif																														//
+			                         {return 1;}																					//
 }																																	//
 uint8_t	iarduino_GPS_ATGM336::_SerialRead(void){																					//
 			if(_flgTypeSerial==1){return (uint8_t)(*(HardwareSerial*)_objSerial).read();     }else									//	Чтение байта из буфера аппаратного UART.

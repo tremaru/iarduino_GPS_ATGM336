@@ -7,9 +7,9 @@ const uint8_t pinTX = 9;                           //  Определяем вы
 #include <iarduino_GPS_NMEA.h>                     //  Подключаем библиотеку для расшифровки строк протокола NMEA получаемых по UART.
 #include <iarduino_GPS_ATGM336.h>                  //  Подключаем библиотеку для настройки параметров работы GPS модуля ATGM336.
                                                    //
-SoftwareSerial       SerialGPS(pinRX, pinTX);      //  Объявляем объект SerialGPS   для работы с функциями и методами библиотеки SoftwareSerial, указав выводы RX и TX Arduino.
-iarduino_GPS_NMEA    gps;                          //  Объявляем объект gps         для работы с функциями и методами библиотеки iarduino_GPS_NMEA.
-iarduino_GPS_ATGM336 SettingsGPS;                  //  Объявляем объект SettingsGPS для работы с функциями и методами библиотеки iarduino_GPS_ATGM336.
+SoftwareSerial       SerialGPS(pinRX, pinTX);      //  Создаём объект SerialGPS   для работы с функциями и методами библиотеки SoftwareSerial, указав выводы RX и TX Arduino.
+iarduino_GPS_NMEA    gps;                          //  Создаём объект gps         для работы с функциями и методами библиотеки iarduino_GPS_NMEA.
+iarduino_GPS_ATGM336 SettingsGPS;                  //  Создаём объект SettingsGPS для работы с функциями и методами библиотеки iarduino_GPS_ATGM336.
                                                    //
 void setup(){                                      //
 //   Инициируем работу библиотек:                  //

@@ -7,9 +7,9 @@ const uint8_t pinTX = 9;                           //  Определяем вы
 #include <iarduino_GPS_NMEA.h>                     //  Подключаем библиотеку для расшифровки строк протокола NMEA получаемых по UART.
 #include <iarduino_GPS_ATGM336.h>                  //  Подключаем библиотеку для настройки параметров работы GPS модуля ATGM336.
                                                    //
-SoftwareSerial       SerialGPS(pinRX, pinTX);      //  Объявляем объект SerialGPS   для работы с функциями и методами библиотеки SoftwareSerial, указав выводы RX и TX Arduino.
-iarduino_GPS_NMEA    gps;                          //  Объявляем объект gps         для работы с функциями и методами библиотеки iarduino_GPS_NMEA.
-iarduino_GPS_ATGM336 SettingsGPS;                  //  Объявляем объект SettingsGPS для работы с функциями и методами библиотеки iarduino_GPS_ATGM336.
+SoftwareSerial       SerialGPS(pinRX, pinTX);      //  Создаём объект SerialGPS   для работы с функциями и методами библиотеки SoftwareSerial, указав выводы RX и TX Arduino.
+iarduino_GPS_NMEA    gps;                          //  Создаём объект gps         для работы с функциями и методами библиотеки iarduino_GPS_NMEA.
+iarduino_GPS_ATGM336 SettingsGPS;                  //  Создаём объект SettingsGPS для работы с функциями и методами библиотеки iarduino_GPS_ATGM336.
                                                    //
 uint8_t i[30][6];                                  //  Объявляем массив для получения данных о 30 спутниках в формате: {ID спутника (1...255), Отношение сигнал/шум (SNR) в дБ, тип навигационной системы (1-GPS/2-Глонасс/3-Galileo/4-Beidou/5-QZSS), Флаг участия спутника в позиционировании (1/0), Азимут положения спутника (0°...360°), Угол возвышения спутника (0°-горизонт ... 90°-зенит) }.
 char* sa[]={"NoName ","GPS    ","Глонасс"};        //  Определяем массив строк содержащих названия навигационных систем спутников.
