@@ -1,5 +1,5 @@
 //	Библиотека для работы с GPS модулем ATGM336: https://iarduino.ru/shop/Expansion-payments/gps-glonass-modul-trema-modul.html
-//  Версия: 1.1.3
+//  Версия: 1.1.4
 //  Последнюю версию библиотеки Вы можете скачать по ссылке: https://iarduino.ru/file/539.html
 //  Подробное описание функций бибилиотеки доступно по ссылке: https://wiki.iarduino.ru/page/GPS-module/
 //  Библиотека является собственностью интернет магазина iarduino.ru и может свободно использоваться и распространяться!
